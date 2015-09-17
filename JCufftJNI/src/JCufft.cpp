@@ -360,6 +360,92 @@ JNIEXPORT jint JNICALL Java_jcuda_jcufft_JCufft_cufftMakePlanManyNative
     return result;
 }
 
+
+/*
+* Class:     jcuda_jcufft_JCufft
+* Method:    cufftMakePlanManyNative64
+* Signature: (Ljcuda/jcufft/cufftHandle;I[J[JJJ[JJJIJ[J)I
+*/
+JNIEXPORT jint JNICALL Java_jcuda_jcufft_JCufft_cufftMakePlanManyNative64
+(JNIEnv *env, jclass cls, jobject plan, jint rank, jlongArray n, jlongArray inembed, jlong istride, jlong idist, jlongArray onembed, jlong ostride, jlong odist, jint type, jlong batch, jlongArray workSize)
+{
+    if (plan == NULL)
+    {
+        ThrowByName(env, "java/lang/NullPointerException", "Parameter 'plan' is null for cufftMakePlanMany64");
+        return JCUFFT_INTERNAL_ERROR;
+    }
+    if (n == NULL)
+    {
+        ThrowByName(env, "java/lang/NullPointerException", "Parameter 'n' is null for cufftMakePlanMany64");
+        return JCUFFT_INTERNAL_ERROR;
+    }
+    if (workSize == NULL)
+    {
+        ThrowByName(env, "java/lang/NullPointerException", "Parameter 'workSize' is null for cufftMakePlanMany64");
+        return JCUFFT_INTERNAL_ERROR;
+    }
+
+    Logger::log(LOG_TRACE, "Executing cufftMakePlanMany64\n");
+
+    cufftHandle nativePlan = env->GetIntField(plan, cufftHandle_plan);
+    long long *nativeN = getArrayContents(env, n);
+    long long *nativeInembed = getArrayContents(env, inembed);
+    long long *nativeOnembed = getArrayContents(env, onembed);
+    size_t nativeWorkSize = 0;
+
+    cufftResult result = cufftMakePlanMany64(nativePlan, (int)rank, nativeN, nativeInembed, (long long)istride, (long long)idist, nativeOnembed, (long long)ostride, (long long)odist, getCufftType(type), (long long)batch, &nativeWorkSize);
+
+    delete[] nativeN;
+    delete[] nativeInembed;
+    delete[] nativeOnembed;
+    env->SetIntField(plan, cufftHandle_plan, nativePlan);
+    set(env, workSize, 0, (jlong)nativeWorkSize);
+    return result;
+}
+
+/*
+* Class:     jcuda_jcufft_JCufft
+* Method:    cufftGetSizeMany64Native
+* Signature: (Ljcuda/jcufft/cufftHandle;I[J[JJJ[JJJIJ[J)I
+*/
+JNIEXPORT jint JNICALL Java_jcuda_jcufft_JCufft_cufftGetSizeMany64Native
+(JNIEnv *env, jclass cls, jobject plan, jint rank, jlongArray n, jlongArray inembed, jlong istride, jlong idist, jlongArray onembed, jlong ostride, jlong odist, jint type, jlong batch, jlongArray workSize)
+{
+    if (plan == NULL)
+    {
+        ThrowByName(env, "java/lang/NullPointerException", "Parameter 'plan' is null for cufftGetSizeMany64");
+        return JCUFFT_INTERNAL_ERROR;
+    }
+    if (n == NULL)
+    {
+        ThrowByName(env, "java/lang/NullPointerException", "Parameter 'n' is null for cufftGetSizeMany64");
+        return JCUFFT_INTERNAL_ERROR;
+    }
+    if (workSize == NULL)
+    {
+        ThrowByName(env, "java/lang/NullPointerException", "Parameter 'workSize' is null for cufftGetSizeMany64");
+        return JCUFFT_INTERNAL_ERROR;
+    }
+
+    Logger::log(LOG_TRACE, "Executing cufftGetSizeMany64\n");
+
+    cufftHandle nativePlan = env->GetIntField(plan, cufftHandle_plan);
+    long long *nativeN = getArrayContents(env, n);
+    long long *nativeInembed = getArrayContents(env, inembed);
+    long long *nativeOnembed = getArrayContents(env, onembed);
+    size_t nativeWorkSize = 0;
+
+    cufftResult result = cufftGetSizeMany64(nativePlan, (int)rank, nativeN, nativeInembed, (long long)istride, (long long)idist, nativeOnembed, (long long)ostride, (long long)odist, getCufftType(type), (long long)batch, &nativeWorkSize);
+
+    delete[] nativeN;
+    delete[] nativeInembed;
+    delete[] nativeOnembed;
+    env->SetIntField(plan, cufftHandle_plan, nativePlan);
+    set(env, workSize, 0, (jlong)nativeWorkSize);
+    return result;
+}
+
+
 /*
  * Class:     jcuda_jcufft_JCufft
  * Method:    cufftEstimate1dNative

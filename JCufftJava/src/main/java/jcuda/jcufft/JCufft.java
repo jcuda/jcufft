@@ -404,6 +404,76 @@ public class JCufft
         int type, int batch, long workSize[]);
 
 
+    public static int cufftMakePlanMany64(
+        cufftHandle plan, 
+        int rank, 
+        long n[],
+        long inembed[], 
+        long istride, 
+        long idist,
+        long onembed[], 
+        long ostride, 
+        long odist,
+        int type, 
+        long batch, 
+        long workSize[])
+    {
+        return checkResult(cufftMakePlanManyNative64(
+            plan, rank, n,
+            inembed, istride, idist,
+            onembed, ostride, odist,
+            type, batch, workSize));
+    }
+    private static native int cufftMakePlanManyNative64(
+        cufftHandle plan, 
+        int rank, 
+        long n[],
+        long inembed[], 
+        long istride, 
+        long idist,
+        long onembed[], 
+        long ostride, 
+        long odist,
+        int type, 
+        long batch, 
+        long workSize[]);
+
+    
+    public static int cufftGetSizeMany64(
+        cufftHandle plan, 
+        int rank, 
+        long n[],
+        long inembed[], 
+        long istride, 
+        long idist,
+        long onembed[], 
+        long ostride, 
+        long odist,
+        int type, 
+        long batch, 
+        long workSize[])
+    {
+        return checkResult(cufftGetSizeMany64Native(
+            plan, rank, n,
+            inembed, istride, idist,
+            onembed, ostride, odist,
+            type, batch, workSize));
+    }
+    private static native int cufftGetSizeMany64Native(
+        cufftHandle plan, 
+        int rank, 
+        long n[],
+        long inembed[], 
+        long istride, 
+        long idist,
+        long onembed[], 
+        long ostride, 
+        long odist,
+        int type, 
+        long batch, 
+        long workSize[]);
+    
+    
 
     public static int cufftEstimate1d(int nx,
         int type,
@@ -1413,17 +1483,6 @@ public class JCufft
      */
     public static int cufftExecD2Z(cufftHandle plan, double rIdata[], double cOdata[])
     {
-        return cufftExecR2C(plan, rIdata, cOdata);
-    }
-
-    /**
-     * @see jcuda.jcufft.JCufft#cufftExecD2Z(cufftHandle, Pointer, Pointer)
-     * @see jcuda.jcufft.JCufft#cufftExecD2Z(cufftHandle, double[], double[])
-     * @deprecated This method will be removed in a future release.
-     * It should have been called 'cufftExecD2Z'.
-     */
-    public static int cufftExecR2C(cufftHandle plan, double rIdata[], double cOdata[])
-    {
         int cudaResult = 0;
 
         boolean inPlace = (rIdata == cOdata);
@@ -1545,9 +1604,6 @@ public class JCufft
         }
         return result;
     }
-
-
-
 
 
 
