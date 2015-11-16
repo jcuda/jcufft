@@ -27,8 +27,9 @@
         
         <dependency>
             <groupId>org.jcuda</groupId>
-            <artifactId>JCufft-${jcuda.os}-${jcuda.arch}</artifactId>
+            <artifactId>JCufft-native</artifactId>
             <version>${project.version}</version>
+            <classifier>${jcuda.os}-${jcuda.arch}</classifier>
             <type>${jcuda.ext}</type>
         </dependency>
         
@@ -41,16 +42,28 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>2.10</version>
                 <executions>
+
                     <execution>
-                        <phase>initialize</phase>
+                        <phase>process-test-resources</phase>
+                        <id>copy-natives</id>
                         <goals>
-                            <goal>copy-dependencies</goal>
+                            <goal>copy</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                            <stripVersion>true</stripVersion>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.jcuda</groupId>
+                                    <artifactId>JCufft-native</artifactId>
+                                    <classifier>${jcuda.os}-${jcuda.arch}</classifier>
+                                    <type>${jcuda.ext}</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                                    <destFileName>JCufft-${jcuda.os}-${jcuda.arch}.${jcuda.ext}</destFileName>
+                                </artifactItem>
+                            </artifactItems>
                         </configuration>
-                    </execution>
+                    </execution>                    
+
                 </executions>
             </plugin>
         </plugins>
