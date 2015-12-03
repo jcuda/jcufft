@@ -17,14 +17,14 @@
             <artifactId>jcuda</artifactId>
             <version>${project.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.jcuda</groupId>
             <artifactId>JCufft-native</artifactId>
@@ -32,7 +32,7 @@
             <classifier>${jcuda.os}-${jcuda.arch}</classifier>
             <type>${jcuda.ext}</type>
         </dependency>
-        
+
     </dependencies>
 
     <build>
@@ -58,16 +58,16 @@
                                     <type>${jcuda.ext}</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                                    <destFileName>JCufft-${jcuda.os}-${jcuda.arch}.${jcuda.ext}</destFileName>
+                                    <destFileName>${jcuda.prefix}JCufft-${jcuda.os}-${jcuda.arch}.${jcuda.ext}</destFileName>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
-                    </execution>                    
+                    </execution>
 
                 </executions>
             </plugin>
         </plugins>
-        
+
         <pluginManagement>
             <plugins>
                 <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
@@ -93,6 +93,7 @@
                                             <goal>
                                                 copy-dependencies
                                             </goal>
+                                            <goal>copy</goal>
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
