@@ -1,1 +1,6 @@
-JCufftJava/target/
+/JCufftJava/target/
+/JCufftJava/.settings
+/JCufftJava/.classpath
+/JCufftJava/.project
+/target
+/nativeLibraries
