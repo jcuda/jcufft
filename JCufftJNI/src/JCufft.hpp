@@ -2,7 +2,7 @@
  * JCufft - Java bindings for CUFFT, the NVIDIA CUDA FFT library,
  * to be used with JCuda
  *
- * Copyright (c) 2008-2015 Marco Hutter - http://www.jcuda.org
+ * Copyright (c) 2008-2016 Marco Hutter - http://www.jcuda.org
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -54,6 +54,14 @@ extern "C" {
     */
     JNIEXPORT jint JNICALL Java_jcuda_jcufft_JCufft_cufftGetVersionNative
         (JNIEnv *, jclass, jintArray);
+
+    /*
+    * Class:     jcuda_jcufft_JCufft
+    * Method:    cufftGetPropertyNative
+    * Signature: (I[I)I
+    */
+    JNIEXPORT jint JNICALL Java_jcuda_jcufft_JCufft_cufftGetPropertyNative
+        (JNIEnv *, jclass, jint, jintArray);
 
     /*
     * Class:     jcuda_jcufft_JCufft

@@ -114,6 +114,11 @@ public class cufftResult
     public static final int CUFFT_LICENSE_ERROR = 0x0F;
 
     /**
+     * Not supported
+     */
+    public static final int CUFFT_NOT_SUPPORTED = 0x10;
+
+    /**
      * An internal JCufft error occurred
      */
     public static final int JCUFFT_INTERNAL_ERROR = 0xFF;
@@ -144,6 +149,7 @@ public class cufftResult
             case CUFFT_NO_WORKSPACE : return "CUFFT_NO_WORKSPACE";
             case CUFFT_NOT_IMPLEMENTED : return "CUFFT_NOT_IMPLEMENTED";
             case CUFFT_LICENSE_ERROR : return "CUFFT_LICENSE_ERROR";
+            case CUFFT_NOT_SUPPORTED : return "CUFFT_NOT_SUPPORTED";
             case JCUFFT_INTERNAL_ERROR : return "JCUFFT_INTERNAL_ERROR";
         }
         return "INVALID cufftResult: " + m;

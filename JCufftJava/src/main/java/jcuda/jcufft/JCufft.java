@@ -159,6 +159,19 @@ public class JCufft
     }
 
     private static native int cufftGetVersionNative(int version[]);
+    
+    /**
+     * Obtains the value of the specified property. 
+     * 
+     * @param type The {@link libraryPropertyType}
+     * @param value The value
+     * @return CUFFT_SUCCESS, CUFFT_INVALID_TYPE, CUFFT_INVALID_VALUE
+     */
+    public static int cufftGetProperty(int type, int value[])
+    {
+        return checkResult(cufftGetPropertyNative(type, value));
+    }
+    private static native int cufftGetPropertyNative(int type, int value[]);
 
     /**
      * <pre>

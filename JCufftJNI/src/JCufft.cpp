@@ -59,6 +59,26 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved)
     return JNI_VERSION_1_4;
 }
 
+/**
+* Returns the cufftType enum element that corresponds to
+* the given int value
+*/
+cufftType getCufftType(int type)
+{
+    switch (type)
+    {
+    case 0x2A: return CUFFT_R2C;
+    case 0x2C: return CUFFT_C2R;
+    case 0x29: return CUFFT_C2C;
+    case 0x6a: return CUFFT_D2Z;
+    case 0x6c: return CUFFT_Z2D;
+    case 0x69: return CUFFT_Z2Z;
+    }
+    Logger::log(LOG_ERROR, "Invalid cufftType specified: %d\n", type);
+    return CUFFT_C2C;
+}
+
+
 /*
  * Set the log level
  *
@@ -95,26 +115,41 @@ JNIEXPORT jint JNICALL Java_jcuda_jcufft_JCufft_cufftGetVersionNative
     return result;
 }
 
-
-
-/**
- * Returns the cufftType enum element that corresponds to
- * the given int value
- */
-cufftType getCufftType(int type)
+JNIEXPORT jint JNICALL Java_jcuda_jcufft_JCufft_cufftGetPropertyNative(JNIEnv *env, jclass cls, jint type, jintArray value)
 {
-    switch (type)
+    // Null-checks for non-primitive arguments
+    // type is primitive
+    if (value == NULL)
     {
-        case 0x2A: return CUFFT_R2C;
-        case 0x2C: return CUFFT_C2R;
-        case 0x29: return CUFFT_C2C;
-        case 0x6a: return CUFFT_D2Z;
-        case 0x6c: return CUFFT_Z2D;
-        case 0x69: return CUFFT_Z2Z;
+        ThrowByName(env, "java/lang/NullPointerException", "Parameter 'value' is null for cufftGetProperty");
+        return JCUFFT_INTERNAL_ERROR;
     }
-    Logger::log(LOG_ERROR, "Invalid cufftType specified: %d\n", type);
-    return CUFFT_C2C;
+
+    // Log message
+    Logger::log(LOG_TRACE, "Executing cufftGetProperty(type=%d, value=%p)\n",
+        type, value);
+
+    // Native variable declarations
+    libraryPropertyType type_native;
+    int value_native;
+
+    // Obtain native variable values
+    type_native = (libraryPropertyType)type;
+    // value is write-only
+
+    // Native function call
+    cufftResult_t jniResult_native = cufftGetProperty(type_native, &value_native);
+
+    // Write back native variable values
+    // type is primitive
+    if (!set(env, value, 0, (jint)value_native)) return JCUFFT_INTERNAL_ERROR;
+
+    // Return the result
+    jint jniResult = (jint)jniResult_native;
+    return jniResult;
 }
+
+
 
 
 /*

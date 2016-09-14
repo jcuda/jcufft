@@ -69,6 +69,8 @@ public class cufftCompatibility
 
     /**
      * For convenience, enables all FFTW compatibility modes at once.
+     * 
+     * @deprecated as of CUDA 8.0.27
      */
     public static final int CUFFT_COMPATIBILITY_FFTW_ALL        = 0x03;
 

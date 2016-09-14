@@ -4,3 +4,5 @@
 /JCufftJava/.project
 /target
 /nativeLibraries
+/.project
+/.settings
