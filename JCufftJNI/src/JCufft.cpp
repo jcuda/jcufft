@@ -1106,17 +1106,6 @@ JNIEXPORT jint JNICALL Java_jcuda_jcufft_JCufft_cufftSetStreamNative
 JNIEXPORT jint JNICALL Java_jcuda_jcufft_JCufft_cufftSetCompatibilityModeNative
   (JNIEnv *env, jclass cla, jobject plan, jint mode)
 {
-    if (plan == NULL)
-    {
-        ThrowByName(env, "java/lang/NullPointerException", "Parameter 'plan' is null for cufftSetCompatibilityMode");
-        return JCUFFT_INTERNAL_ERROR;
-    }
-
-    Logger::log(LOG_TRACE, "Executing cufftSetCompatibilityMode\n");
-
-    cufftHandle nativePlan = env->GetIntField(plan, cufftHandle_plan);
-    cufftCompatibility nativeMode = (cufftCompatibility)mode;
-
-    cufftResult result = cufftSetCompatibilityMode(nativePlan, nativeMode);
-    return result;
+	ThrowByName(env, "java/lang/UnsupportedOperationException", "Function cufftSetCompatibilityMode was removed in CUDA version 9.1.");
+	return JCUFFT_INTERNAL_ERROR;
 }

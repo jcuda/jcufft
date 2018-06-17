@@ -725,6 +725,9 @@ public class JCufft
      * CUFFT_INVALID_PLAN The plan parameter is not a valid handle.
      * CUFFT_SUCCESS CUFFT successfully executed the FFT plan.
      * </pre>
+     * 
+     * @deprecated This function was removed in CUDA 9.1, and will throw
+     * an UnsupportedOperationException
      */
     public static int cufftSetCompatibilityMode(cufftHandle plan, int mode)
     {
