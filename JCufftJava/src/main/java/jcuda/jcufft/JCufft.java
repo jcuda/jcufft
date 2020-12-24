@@ -86,7 +86,7 @@ public class JCufft
             String libraryBaseName = "JCufft-" + JCuda.getJCudaVersion();
             String libraryName = 
                 LibUtils.createPlatformLibraryName(libraryBaseName);
-            LibUtils.loadLibrary(libraryName);
+            LibUtilsCuda.loadLibrary(libraryName);
             initialized = true;
         }
     }
