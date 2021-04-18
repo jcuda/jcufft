@@ -83,7 +83,7 @@ public class JCufft
     {
         if (!initialized)
         {
-            String libraryBaseName = "JCufft-" + JCuda.getJCudaVersion();
+            String libraryBaseName = "JCufft-" + JCudaVersion.get();
             String libraryName = 
                 LibUtils.createPlatformLibraryName(libraryBaseName);
             LibUtilsCuda.loadLibrary(libraryName);
